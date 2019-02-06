@@ -1,6 +1,6 @@
 import numpy as np
 
-lines = [line.rstrip('\n') for line in open('./sample_input.tsv')]
+lines = [line.rstrip('\n') for line in open('./dataset/sample_input.tsv')]
 
 num_data_points = int(lines[0])
 num_features = int(lines[1])
@@ -19,3 +19,9 @@ for list in x:
 x = np.matrix(x)
 y = np.matrix(y)
 w = np.matmul(np.linalg.inv(np.matmul(x.transpose(), x)), np.matmul(x.transpose(), y))
+
+print(w)
+
+loss = (1 / (2 * num_data_points)) * np.matmul(np.subtract(np.matmul(x, w), y).transpose(), np.subtract(np.matmul(x, w), y))
+
+print(loss)

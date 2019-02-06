@@ -1,27 +1,22 @@
 import numpy as np
+import csv
 
-lines = [line.rstrip('\n') for line in open('./dataset/sample_input.tsv')]
+with open('./dataset/data_100k_300.tsv', 'r') as tsv_input_file:
+  tsv_input_file = csv.reader(tsv_input_file, delimiter='\t')
+  num_data_points = int(next(tsv_input_file)[0])
+  num_features = int(next(tsv_input_file)[0])
+  next(tsv_input_file, None)
 
-num_data_points = int(lines[0])
-num_features = int(lines[1])
+  y = []
+  x = []
 
-for i in range(3):
-  lines.pop(0)
+  for row in tsv_input_file:
+    row.append(1.0)
+    y.append([float(row[0])])
+    x.append([float(x) for x in row[1:]])
 
-x = [i.split("\t") for i in lines]
-x = [[int(float(j)) for j in i] for i in x]
-y = [[int(float(i[0]))] for i in x]
+  x = np.matrix(x)
+  y = np.matrix(y)
+  w = np.matmul(np.linalg.inv(np.matmul(x.transpose(), x)), np.matmul(x.transpose(), y))
 
-for list in x:
-  list.pop(0)
-  list.append(1)
-
-x = np.matrix(x)
-y = np.matrix(y)
-w = np.matmul(np.linalg.inv(np.matmul(x.transpose(), x)), np.matmul(x.transpose(), y))
-
-print(w)
-
-loss = (1 / (2 * num_data_points)) * np.matmul(np.subtract(np.matmul(x, w), y).transpose(), np.subtract(np.matmul(x, w), y))
-
-print(loss)
+  loss = (1 / (2 * num_data_points)) * np.matmul(np.subtract(np.matmul(x, w), y).transpose(), np.subtract(np.matmul(x, w), y))

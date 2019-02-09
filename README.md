@@ -8,10 +8,16 @@ Here, we are experimenting with three different algorithms to train linear regre
 
 Solving for w using the following equation:
 
+![normal](./img/normal.png)
+
 ## Batch Gradient Descent (BGD)
 
 Solving for w using the following algorithm:
 
+![bgd](./img/bgd.png)
+
 ## Stochastic Gradient Descent (SGD)
 
 Solving for w using the following algorithm:
+
+![sgd](./img/sgd.png)
